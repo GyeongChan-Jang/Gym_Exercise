@@ -1,5 +1,3 @@
-import { RepeatOneSharp } from '@mui/icons-material'
-
 export const exerciseOptions = {
   method: 'GET',
   url: 'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',

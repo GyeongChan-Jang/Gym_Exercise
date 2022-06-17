@@ -12,29 +12,24 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   // 페이지가 load 되면 카테코리를 보여줄 수 있도록 useEffect 사용
   useEffect(() => {
     const fetchExercisesData = async () => {
-      const bodyPartsData = await fetchData(
-        'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
-        exerciseOptions
-      )
+      const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions)
       setBodyParts(['all', ...bodyPartsData])
     }
-    // fetchExercisesData()
+    fetchExercisesData()
   }, [])
 
   const handleSearch = async () => {
     if (search) {
-      const exercisesData = fetchData(
-        'https://exercisedb.p.rapidapi.com/exercises',
-        exerciseOptions
+      const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions)
+      const searchedExercises = exercisesData.filter(
+        (exercise) =>
+          exercise.name.toLowerCase().includes(search) ||
+          exercise.bodyPart.toLowerCase().includes(search) ||
+          exercise.equipment.toLowerCase().includes(search) ||
+          exercise.target.toLowerCase().includes(search)
       )
-      const searchedEcercises = exercisesData.filter((exercise) => {
-        exercise.name.includes(search) ||
-          exercise.bodyPart.includes(search) ||
-          exercise.equipment.includes(search) ||
-          exercise.target.includes(search)
-      })
       setSearch('')
-      setExercises(searchedEcercises)
+      setExercises(searchedExercises)
     }
   }
 
@@ -91,11 +86,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         </Button>
       </Box>
       <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
-        <HorizontalScrollbar
-          data={bodyParts}
-          bodyPart={bodyPart}
-          setBodyPart={setBodyPart}
-        />
+        <HorizontalScrollbar data={bodyParts} bodyPart={bodyPart} setBodyPart={setBodyPart} />
       </Box>
     </Stack>
   )

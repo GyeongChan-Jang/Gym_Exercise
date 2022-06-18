@@ -22,6 +22,21 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     window.scrollTo({ top: 1800, behavior: 'smooth' })
   }
 
+  // bodyPart가 바뀔 때만 새로 함수가 실행되도록 useEffect 활용!
+  useEffect(() => {
+    const fetchExercisesData = async () => {
+      let exercisesData = []
+
+      if (bodyPart === 'all') {
+        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions)
+      } else {
+        exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions)
+      }
+      setExercises(exercisesData)
+    }
+    fetchExercisesData()
+  }, [bodyPart])
+
   return (
     <Box it="exercises" sx={{ mt: { lg: '110px' } }} mt="50px" p="20px">
       <Typography variant="h3" mb="46px">

@@ -10,6 +10,7 @@ const Home = () => {
   // home에서 useState를 만든 이유는 -> Home에서의 state의 변화가 모든 컴포넌트들에게 반영되기 때문에!
   const [bodyPart, setBodyPart] = useState('all')
   const [exercises, setExercises] = useState([])
+  console.log(bodyPart)
 
   return (
     <Box>
